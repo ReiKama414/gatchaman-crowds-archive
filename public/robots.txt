@@ -1,0 +1,3 @@
+# Block well-behaved crawlers and indexers (site may still be reachable by direct URL).
+User-agent: *
+Disallow: /
