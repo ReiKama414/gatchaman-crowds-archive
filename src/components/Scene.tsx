@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { useArchive } from '../store'
+import { publicUrl } from '../publicUrl'
 
 const particleVertex = `
   attribute vec3 aTarget;
@@ -66,7 +67,7 @@ function Particles() {
 const imageVertex = `varying vec2 vUv; uniform float uTime; void main(){vUv=uv;vec3 p=position;p.z+=sin(p.x*3.+uTime)*.025;gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`
 const imageFragment = `varying vec2 vUv; uniform sampler2D uImage; uniform float uTime; uniform float uIntensity; void main(){vec2 uv=vUv;uv.x+=sin(uv.y*18.+uTime*.5)*uIntensity;vec4 c=texture2D(uImage,clamp(uv,0.,1.));gl_FragColor=vec4(c.rgb,c.a*.75);}`
 function DistortedImage({ src }: { src: string }) {
-  const tex = useTexture(src)
+  const tex = useTexture(publicUrl(src))
   const ref = useRef<THREE.ShaderMaterial>(null)
   const reduced = useArchive((s) => s.reducedMotion)
   const uniforms = useMemo(() => ({ uImage: { value: tex }, uTime: { value: 0 }, uIntensity: { value: .004 } }), [tex])

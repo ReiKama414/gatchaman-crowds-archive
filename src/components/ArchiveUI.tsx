@@ -10,6 +10,7 @@ import { publicFacts, publishedText } from '../data/presentation'
 import { AnimatedDetails } from './AnimatedDetails'
 import { SwipeCarousel } from './SwipeCarousel'
 import type { Source } from '../data/types'
+import { publicUrl } from '../publicUrl'
 
 const statusNames: Record<string, string> = { confirmed: '官方核實', secondary: '二手資料', inferred: '推定' }
 export function FactList({ facts }: { facts: Fact[] }) {
@@ -28,7 +29,7 @@ export function Artwork({ asset, className = '', onOpen }: { asset?: ArchiveAsse
   if (!asset) return null
   return <figure className={`artwork ${asset.layout} ${asset.transparent ? 'transparent-art' : ''} ${asset.provenance ? 'derived-art' : ''} ${className}`}>
     <button aria-label={`放大${asset.caption}`} onClick={() => onOpen?.(asset)} className="artwork-open" disabled={!onOpen}>
-      <img src={asset.path} alt={asset.caption} width={asset.dimensions.width} height={asset.dimensions.height} loading="lazy" decoding="async" />
+      <img src={publicUrl(asset.path)} alt={asset.caption} width={asset.dimensions.width} height={asset.dimensions.height} loading="lazy" decoding="async" />
       {onOpen && <span className="enlarge"><Maximize2 size={16} /></span>}
     </button>
     <figcaption><span>{asset.sourceName} · S0{asset.season}</span><a href={asset.sourcePage} target="_blank" rel="noreferrer" aria-label={`前往${asset.sourceName}`}><ArrowUpRight size={12} /></a></figcaption>
@@ -63,7 +64,7 @@ export function Lightbox({ asset, onClose, onChange, items }: { asset: ArchiveAs
   const idx = items.findIndex((a) => a.id === asset.id)
   return <div className="lightbox" role="dialog" aria-modal="true" aria-label={asset.caption} ref={ref} tabIndex={-1} data-lenis-prevent onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
     <header><span>{asset.provenance ? 'AI-ASSISTED VISUAL' : asset.kind === 'merch' ? 'LICENSED MERCHANDISE / RETAIL PHOTO' : 'OFFICIAL VISUAL'} / {String(idx + 1).padStart(2, '0')}</span><button onClick={onClose} aria-label="關閉圖片"><X /></button></header>
-    <img src={asset.path} alt={asset.caption} />
+    <img src={publicUrl(asset.path)} alt={asset.caption} />
     <div className="lightbox-bottom"><div><p>{asset.caption}</p><small>{asset.dimensions.width} × {asset.dimensions.height} · {asset.rights}</small><a href={asset.sourcePage} target="_blank" rel="noreferrer">{asset.sourceName}<ArrowUpRight size={13} /></a></div><div className="lightbox-buttons"><button disabled={items.length < 2} onClick={() => onChange(items[(idx - 1 + items.length) % items.length])} aria-label="上一張"><ChevronLeft /></button><button disabled={items.length < 2} onClick={() => onChange(items[(idx + 1) % items.length])} aria-label="下一張"><ChevronRight /></button></div></div>
   </div>
 }
