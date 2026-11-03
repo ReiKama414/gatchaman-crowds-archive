@@ -1,3 +1,4 @@
-# Block well-behaved crawlers and indexers (site may still be reachable by direct URL).
+# Every crawler is disallowed. This file stays readable so the rule can be seen.
+# On Vercel, crawler user agents are denied on every other path.
 User-agent: *
 Disallow: /

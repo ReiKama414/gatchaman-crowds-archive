@@ -56,7 +56,7 @@ Open the URL printed in the terminal (default `http://localhost:5173/`).
 | `npm run build` | Production build |
 | `npm run preview` | Preview the build |
 
-The site can be deployed and opened by URL, but it is **not meant for search indexing**: `noindex` meta in `index.html`, sitewide `Disallow` in `public/robots.txt`, and `X-Robots-Tag` via `vercel.json` on Vercel. Well-behaved crawlers should not list it; malicious or robots-ignoring fetchers cannot be fully blocked.
+The site can still be opened in a normal browser, but **crawlers are rejected**: sitewide `Disallow` in `public/robots.txt`, plus `noindex` in `index.html` and `X-Robots-Tag`. On Vercel, crawler user agents and requests with no user agent receive 403 (except `robots.txt`). GitHub Pages is static hosting and cannot deny by user agent, so only robots and noindex apply there.
 
 ---
 

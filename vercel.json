@@ -9,5 +9,25 @@
         }
       ]
     }
+  ],
+  "routes": [
+    {
+      "src": "/(?!robots\\.txt$).*",
+      "missing": [{ "type": "header", "key": "user-agent" }],
+      "mitigate": { "action": "deny" }
+    },
+    {
+      "src": "/(?!robots\\.txt$).*",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": {
+            "re": "^[\\s\\S]*(?:(?:^|[^a-z])bot|[^u]bot|hubot|crawler|spider|scraper|slurp|wget|curl(?:/|[^a-z]|$)|python-requests|python-urllib|aiohttp|scrapy|go-http-client|headless|phantomjs|selenium|puppeteer|playwright|httrack|nutch|heritrix|archiver|semrush|ahrefs|mj12|dataforseo|serpstat|majestic|facebookexternalhit|meta-external|yandex|yeti/|qwantify|teoma|embedly|iframely|feedfetcher|lighthouse|pagespeed|pingdom|sqlmap|nikto|zgrab|masscan|libwww|okhttp|httpx(?:/|[^a-z]|$)|httpunit|httpclient|java/|chatgpt|claude|anthropic|perplexity|cohere|omgili|turnitin|commoncrawl|webzio|img2dataset|node-fetch|undici|axios|colly|guzzle|mechanize|fasthttp|winhttp|slack-imgproxy|skypeuripreview|google-extended|googleother|mediapartners-google|apis-google|duplexweb|google-inspectiontool|google-safety|google-read-aloud|google-cloudvertex|quora link preview|quora-link-preview)[\\s\\S]*$|^whatsapp/[\\s\\S]*$|^\\s*$"
+          }
+        }
+      ],
+      "mitigate": { "action": "deny" }
+    }
   ]
 }

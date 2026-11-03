@@ -56,7 +56,7 @@ npm run dev
 | `npm run build` | 正式建置 |
 | `npm run preview` | 預覽建置結果 |
 
-部署後站點仍可透過連結開啟，但**不供搜尋引擎索引**：`index.html` 的 `noindex` meta、`public/robots.txt` 全站 `Disallow`，以及 `vercel.json` 的 `X-Robots-Tag`（Vercel）。遵守規則的爬蟲不應收錄；無法保證惡意或無視 robots 的抓取
+部署後站點仍可透過一般瀏覽器開啟，但**拒絕爬蟲**：`public/robots.txt` 全站 `Disallow`，`index.html` 與 `X-Robots-Tag` 維持 `noindex`。Vercel 會對爬蟲 User-Agent、以及沒有 User-Agent 的請求回 403（`robots.txt` 除外）。GitHub Pages 是靜態託管，無法依 User-Agent 拒絕，只套用 robots 與 noindex
 
 ---
 
